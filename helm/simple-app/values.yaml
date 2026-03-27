@@ -1,7 +1,7 @@
 replicaCount: 2
 
 image:
-  repository: your-dockerhub-username/simple-python-app
+  repository: ksreenath2027/simple-app
   tag: latest
   pullPolicy: IfNotPresent
 

@@ -1,19 +1,19 @@
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: simple-python-app
+  name: simple-app
 spec:
   replicas: {{ .Values.replicaCount }}
   selector:
     matchLabels:
-      app: simple-python-app
+      app: simple-app
   template:
     metadata:
       labels:
-        app: simple-python-app
+        app: simple-app
     spec:
       containers:
-        - name: simple-python-app
+        - name: simple-app
           image: "{{ .Values.image.repository }}:{{ .Values.image.tag }}"
           imagePullPolicy: {{ .Values.image.pullPolicy }}
           ports:
