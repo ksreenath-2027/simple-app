@@ -2,7 +2,7 @@ replicaCount: 2
 
 image:
   repository: ksreenath2027/simple-app
-  tag: ec779b1
+  tag: 98302ac
   pullPolicy: Always
 
 service:
