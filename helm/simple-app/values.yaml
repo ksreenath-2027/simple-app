@@ -2,7 +2,7 @@ replicaCount: 2
 
 image:
 
-  tag: 360c68a390663bc5711a3a55bb0b1bf31cd5f6c6
+  tag: 5b86998
   pullPolicy: IfNotPresent
 
 service:
