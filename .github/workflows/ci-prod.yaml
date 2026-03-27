@@ -1,0 +1,38 @@
+name: Promote to Prod
+
+on:
+  push:
+    paths:
+      - 'charts/values-stag.yaml'
+
+permissions:
+  contents: write
+  pull-requests: write
+
+jobs:
+  prod:
+    runs-on: ubuntu-latest
+
+    steps:
+      - uses: actions/checkout@v3
+
+      - name: Install yq
+        run: sudo apt-get install -y yq
+
+      - name: Extract Tag
+        run: |
+          TAG=$(yq e '.image.tag' charts/values-stag.yaml)
+          echo "TAG=$TAG" >> $GITHUB_ENV
+
+      - name: Update PROD values
+        run: |
+          yq e -i '.image.tag = strenv(TAG)' charts/values-prod.yaml
+
+      - name: Create PROD PR
+        uses: peter-evans/create-pull-request@v5
+        with:
+          branch: prod-${{ env.TAG }}
+          title: "PROD: ${TAG}"
+          base: main
+          commit-message: "Promote to prod ${TAG}"
+          add-paths: charts/values-prod.yaml

@@ -1,0 +1,38 @@
+name: Promote to Staging
+
+on:
+  push:
+    paths:
+      - 'charts/values-dev.yaml'
+
+permissions:
+  contents: write
+  pull-requests: write
+
+jobs:
+  staging:
+    runs-on: ubuntu-latest
+
+    steps:
+      - uses: actions/checkout@v3
+
+      - name: Install yq
+        run: sudo apt-get install -y yq
+
+      - name: Extract Tag
+        run: |
+          TAG=$(yq e '.image.tag' charts/values-dev.yaml)
+          echo "TAG=$TAG" >> $GITHUB_ENV
+
+      - name: Update STAGING values
+        run: |
+          yq e -i '.image.tag = strenv(TAG)' charts/values-stag.yaml
+
+      - name: Create STAGING PR
+        uses: peter-evans/create-pull-request@v5
+        with:
+          branch: staging-${{ env.TAG }}
+          title: "STAGING: ${TAG}"
+          base: main
+          commit-message: "Promote to staging ${TAG}"
+          add-paths: charts/values-stag.yaml

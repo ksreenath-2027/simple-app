@@ -1,0 +1,8 @@
+# Dev
+charts/values-dev.yaml   @dev-team
+
+# Staging
+charts/values-stag.yaml  @qa-team
+
+# Prod
+charts/values-prod.yaml  @platform-team
