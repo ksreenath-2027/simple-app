@@ -10,3 +10,17 @@ service:
   port: 5002
 
 containerPort: 5002
+ingress:
+  enabled: true
+  className: nginx
+
+  annotations:
+    nginx.ingress.kubernetes.io/ssl-redirect: "false"
+
+  hosts:
+    - host: myapp.local
+      paths:
+        - path: /
+          pathType: Prefix
+
+  tls: []
