@@ -2,7 +2,7 @@ replicaCount: 2
 
 image:
 
-  tag: 7de0d5e
+  tag: ec779b1
   pullPolicy: Always
 
 service:
