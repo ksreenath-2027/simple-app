@@ -2,7 +2,7 @@ replicaCount: 2
 
 image:
   repository: ksreenath2027/simple-app
-  tag: 6167e0c
+  tag: ec779b1
   pullPolicy: Always
 
 service:
@@ -18,7 +18,7 @@ ingress:
     nginx.ingress.kubernetes.io/ssl-redirect: "false"
 
   hosts:
-    - host: myapp.local
+    - host: myapp.test
       paths:
         - path: /
           pathType: Prefix
