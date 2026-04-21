@@ -33,11 +33,12 @@ jobs:
       - name: Scan image with trivy
         uses: aquasecurity/trivy-action@v0.20.0
         with: 
-          image-ref : ${{secrets.DOCKER_USERNAME}}/simple-app:${env.TAG}
+          image-ref : ${{secrets.DOCKER_USERNAME}}/simple-app:${{ env.TAG }}
           format: table
           exit-code: 1
           ignore-unfixed: true
-          severity: CRITICAL, HIGH
+          vuln-type: os,library
+          severity: "CRITICAL,HIGH"
 
       - name: Push Docker Image
         run: |
