@@ -7,7 +7,7 @@ start_time = time.time()
 
 @app.route("/")
 def home():
-    return "Hello from CI/CD pipeline and Argo Setup 🚀"
+    return "Hello from CI/CD pipeline and Argo Rollouts Setup 🚀"
 
 # Basic liveness check (is app running?)
 @app.route("/health/live")
