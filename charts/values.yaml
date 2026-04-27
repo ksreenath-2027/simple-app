@@ -2,7 +2,11 @@ replicaCount: 2
 
 image:
   repository: ksreenath2027/simple-app
-  tag: d677677
+  tag: 2eb2073
   pullPolicy: Always
-  
+
+service:
+  type: ClusterIP
+  port: 5002
+
 containerPort: 5002
