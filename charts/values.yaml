@@ -5,8 +5,4 @@ image:
   tag: 926564d
   pullPolicy: Always
 
-service:
-  type: ClusterIP
-  port: 5002
-
 containerPort: 5002

@@ -1,32 +1,33 @@
-apiVersion: apps/v1
-kind: Deployment
+apiVersion: argoproj.io/v1alpha1
+kind: Rollout
 metadata:
-  name: simple-app
+  name: {{ .Release.Name }}
 spec:
   replicas: {{ .Values.replicaCount }}
+
   selector:
     matchLabels:
-      app: simple-app
+      app: {{ .Release.Name }}
+
   template:
     metadata:
       labels:
-        app: simple-app
+        app: {{ .Release.Name }}
     spec:
       containers:
         - name: simple-app
           image: "{{ .Values.image.repository }}:{{ .Values.image.tag }}"
           imagePullPolicy: {{ .Values.image.pullPolicy }}
+
           ports:
             - containerPort: {{ .Values.containerPort }}
-            
+
           livenessProbe:
             httpGet:
               path: /health/live
               port: {{ .Values.containerPort }}
             initialDelaySeconds: 10
             periodSeconds: 10
-            timeoutSeconds: 2
-            failureThreshold: 3
 
           readinessProbe:
             httpGet:
@@ -34,14 +35,18 @@ spec:
               port: {{ .Values.containerPort }}
             initialDelaySeconds: 5
             periodSeconds: 5
-            timeoutSeconds: 2
-            failureThreshold: 3
 
           startupProbe:
             httpGet:
               path: /health/live
               port: {{ .Values.containerPort }}
-            initialDelaySeconds: 0
             periodSeconds: 5
-            timeoutSeconds: 2
             failureThreshold: 30
+
+  strategy:
+    blueGreen:
+      activeService: {{ .Release.Name }}-active
+      previewService: {{ .Release.Name }}-preview
+
+      autoPromotionEnabled: false
+      scaleDownDelaySeconds: 30
