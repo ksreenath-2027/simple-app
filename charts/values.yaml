@@ -2,7 +2,7 @@ replicaCount: 2
 
 image:
   repository: ksreenath2027/simple-app
-  tag: 926564d
+  tag: 2eb2073
   pullPolicy: Always
 
 containerPort: 5002
